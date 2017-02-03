@@ -16,6 +16,8 @@ except ImportError:
             import config
 
 
+DEBUGROT= False
+
 ################
 # Unit Conversion
 ################
@@ -77,37 +79,44 @@ def makeRotaryStatementDisplay(list):
 	lengthofline = 35
 
 	if (state.ROTARY_State == state.ROTARY_States.MoistureThreshold):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Plant Moisture", lengthofline)
 		text2 = centerText("Threshold", lengthofline)
 
 	elif (state.ROTARY_State == state.ROTARY_States.AlarmsActive):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Activate", lengthofline)
 		text2 = centerText("Alarms", lengthofline)
 					
 	elif (state.ROTARY_State == state.ROTARY_States.MoistureAlarm):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Plant Moisture", lengthofline)
 		text2 = centerText("Alarm Level", lengthofline)
 
 	elif (state.ROTARY_State == state.ROTARY_States.AirQualityAlarm):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Air Quality", lengthofline)
 		text2 = centerText("Alarm Level", lengthofline)
 	
 	elif (state.ROTARY_State == state.ROTARY_States.WaterAlarm):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Activate", lengthofline)
 		text2 = centerText("Water Alarm", lengthofline)
 
 	elif (state.ROTARY_State == state.ROTARY_States.TemperatureAlarm):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Temperature", lengthofline)
 		text2 = centerText("Alarm Level", lengthofline)
 
 	elif (state.ROTARY_State == state.ROTARY_States.EnglishMetric):
-		print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+		if (DEBUGROT):
+			print "1-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 		text1 = centerText("Select English", lengthofline)
 		text2 = centerText("Or Metric", lengthofline)
 					
@@ -185,16 +194,19 @@ def closeRotaryOLEDDisplay(list):
 
 def timeoutOnRotarySelect():
 	state.SPP_State =state.SPP_States.Rotary
-	print "rotaryButtonSelectEnd timeout"
+	if (DEBUGROT):
+		print "rotaryButtonSelectEnd timeout"
 
 
 def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub, jobRotaryTimeOut, updateState, publishAlarmToPubNub, saveState ):
 
 		# Now check for Rotary Input
 		if (rotary.hasButtonBeenPushed()):
-			print "Rotary Button Pushed"
+			if (DEBUGROT):
+				print "Rotary Button Pushed"
 			doTimeOut = False
-			print "0-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+			if (DEBUGROT):
+				print "0-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 			if (state.SPP_State != state.SPP_States.RotarySelect):
 				rotaryStartTime = time.time()
 				doTimeOut = True
@@ -213,12 +225,14 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 	
 			# key is state advances per button push 	
 	 		# Select what to change
-			print "pre state", state.ROTARY_State
+			if (DEBUGROT):
+				print "pre state", state.ROTARY_State
 			state.ROTARY_State = ((state.ROTARY_State + Push_Count) % 8) # mod 8 to loop around	
 
 			if (state.ROTARY_State == 0):
 				state.ROTARY_State = 1   # Skip going to idle state
-			print "post state", state.ROTARY_State
+			if (DEBUGROT):
+				print "post state", state.ROTARY_State
 
 			# 0 push - idle
 			# 1 push -  Moisture Threshold
@@ -229,33 +243,40 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 			# 6 push - Temperature Alarm
 			# 7 push - English or Metric Units
 
-			print "rotary_state = ", state.ROTARY_Values[state.ROTARY_State]	
+			if (DEBUGROT):
+				print "rotary_state = ", state.ROTARY_Values[state.ROTARY_State]	
 		
 	
-			print "In state.SPP_States.RotarySelect"
+			if (DEBUGROT):
+				print "In state.SPP_States.RotarySelect"
 
 			if (doTimeOut == True):
 				# setup 3 second timeout on Rotary Select
 				rotaryEndTime = datetime.now() + timedelta(seconds=3)
 				try:
 					scheduler.remove_job(jobRotaryTimeOut.id)
-					print "job removed:", jobRotaryTimeOut.id
+					if (DEBUGROT):
+						print "job removed:", jobRotaryTimeOut.id
 				except:
 					if (jobRotaryTimeOut is not None): 
-						print "previous job does not exist:", jobRotaryTimeOut.id
+						if (DEBUGROT):
+							print "previous job does not exist:", jobRotaryTimeOut.id
 					else:
-						print "No previous job "
+						if (DEBUGROT):
+							print "No previous job "
 	
 				jobRotaryTimeOut = scheduler.add_job(timeoutOnRotarySelect, 'date', run_date=rotaryEndTime)
-				print "Select Job Scheuduled: ", jobRotaryTimeOut.id
-				print "Select rotaryStartTime:", str(time.strftime("%H:%M:%S", time.localtime(rotaryStartTime)))
-				print "Select Job Scheuduled at: ", jobRotaryTimeOut.next_run_time
+				if (DEBUGROT):
+					print "Select Job Scheuduled: ", jobRotaryTimeOut.id
+					print "Select rotaryStartTime:", str(time.strftime("%H:%M:%S", time.localtime(rotaryStartTime)))
+					print "Select Job Scheuduled at: ", jobRotaryTimeOut.next_run_time
 
 
 	
 		# Now deal with Rotary
 		if (state.SPP_State == state.SPP_States.Rotary):
-			print "In state.SPP_States.Rotary"
+			if (DEBUGROT):
+				print "In state.SPP_States.Rotary"
 	    		#readRotary(currentValue, bottomRange, topRange, increment, timeout, buttonTimesOut)
 			
 			# 0 push - idle
@@ -274,7 +295,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 			list = setupLabelRotaryOLEDDisplay(display)
 
 			if (state.ROTARY_State == state.ROTARY_States.MoistureThreshold):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				currentValue = state.Moisture_Threshold
 		 		bottomRange =5.0 
 				topRange = 100.0
@@ -283,7 +305,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 				buttonTimesOut = True
 
 			elif (state.ROTARY_State == state.ROTARY_States.AlarmsActive):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 
 				if (state.Alarm_Active == True):
 					currentValue = 1
@@ -296,7 +319,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 				buttonTimesOut = True
 
 			elif (state.ROTARY_State == state.ROTARY_States.MoistureAlarm):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				currentValue = state.Alarm_Moisture
 		 		bottomRange =5.0 
 				topRange = 100.0
@@ -305,7 +329,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 				buttonTimesOut = True
 
 			elif (state.ROTARY_State == state.ROTARY_States.AirQualityAlarm):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				currentValue = state.Alarm_Air_Quality
 		 		bottomRange =100 
 				topRange = 16000.0
@@ -314,7 +339,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 				buttonTimesOut = True
 
 			elif (state.ROTARY_State == state.ROTARY_States.WaterAlarm):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				if (state.Alarm_Water == True):
 					currentValue = 1
 				else:
@@ -327,7 +353,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 
 
 			elif (state.ROTARY_State == state.ROTARY_States.TemperatureAlarm):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				currentValue = returnTemperatureCF(state.Alarm_Temperature )
 		 		bottomRange =-20.0 
 				topRange = 100.0
@@ -337,7 +364,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 
 
 			elif (state.ROTARY_State == state.ROTARY_States.EnglishMetric):
-				print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "2-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				if (state.EnglishMetric == True):
 					currentValue = 1
 				else:
@@ -352,7 +380,8 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 	    		while (not rotary.checkIfRotaryDone()):
 
 				currentValue = rotary.readCurrentValue()
-            			print "rotary current value = ",currentValue
+				if (DEBUGROT):
+            				print "rotary current value = ",currentValue
 				# handle Text Responses
 				if (state.ROTARY_State == state.ROTARY_States.AlarmsActive):
 					if (currentValue == 1):
@@ -378,15 +407,18 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 				
             			time.sleep(0.2)
 		
-	    		print "final rotary value =", currentValue
+			if (DEBUGROT):
+	    			print "final rotary value =", currentValue
 			# Consume the finishing click 
 			rotary.clearButtonBeenPushed()
 			try:
 				scheduler.remove_job(jobRotaryTimeOut.id)
-				print "job removed:", jobRotaryTimeOut.id
+				if (DEBUGROT):
+					print "job removed:", jobRotaryTimeOut.id
 			except:
 				if (jobRotaryTimeOut is not None): 
-					print "previous job does not exist:", jobRotaryTimeOut.id
+					if (DEBUGROT):
+						print "previous job does not exist:", jobRotaryTimeOut.id
 				else:
 					print "No previous job "
 			
@@ -394,11 +426,13 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 			# interpret appropriate values
 
 			if (state.ROTARY_State == state.ROTARY_States.MoistureThreshold):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				state.Moisture_Threshold = currentValue
 
 			elif (state.ROTARY_State == state.ROTARY_States.AlarmsActive):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				if (currentValue == 1):
 					state.Alarm_Active = True
 					publishAlarmToPubNub("None")
@@ -407,23 +441,28 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 					publishAlarmToPubNub("")
 					
 			elif (state.ROTARY_State == state.ROTARY_States.MoistureAlarm):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				state.Alarm_Moisture = currentValue
 
 			elif (state.ROTARY_State == state.ROTARY_States.AirQualityAlarm):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				state.Alarm_Air_Quality = currentValue
 
 			elif (state.ROTARY_State == state.ROTARY_States.WaterAlarm):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				state.Alarm_Water = currentValue
 
 			elif (state.ROTARY_State == state.ROTARY_States.TemperatureAlarm):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				state.Alarm_Temperature = returnTemperatureFC(currentValue)
 
 			elif (state.ROTARY_State == state.ROTARY_States.EnglishMetric):
-				print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
+				if (DEBUGROT):
+					print "3-in ROTARY_State", state.ROTARY_Values[state.ROTARY_State] 
 				if (currentValue == 1):
 					state.EnglishMetric = True
 				else:

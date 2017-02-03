@@ -556,31 +556,38 @@ def updateState():
 def checkForAlarms():
 
 	# check to see alarm
-	print "checking for alarm"
+        if (DEBUG):
+		print "checking for alarm"
 
 	if (state.Alarm_Active == True):
 		activeAlarm = False
-		print "state.Alarm_Air_Quality=", state.Alarm_Air_Quality
-		print "state.AirQuality_Sensor_Value", state.AirQuality_Sensor_Value
+        	if (DEBUG):
+			print "state.Alarm_Air_Quality=", state.Alarm_Air_Quality
+			print "state.AirQuality_Sensor_Value", state.AirQuality_Sensor_Value
 
 		if (state.Alarm_Temperature >= state.Temperature):
-			print "---->Low Temperature Alarm!"
+        		if (DEBUG):
+				print "---->Low Temperature Alarm!"
 			activeAlarm = True
 
 		if (state.Alarm_Moisture >= state.Moisture_Humidity):
-			print "---->Moisture Alarm!"
+        		if (DEBUG):
+				print "---->Moisture Alarm!"
 			activeAlarm = True
 
 		if (state.Alarm_Water  == True ):
 			if (state.Pump_Water_Full == False):
-				print "---->Water Empty Alarm!"
+        			if (DEBUG):
+					print "---->Water Empty Alarm!"
 				activeAlarm = True
 		
 		if (state.Alarm_Air_Quality <  state.AirQuality_Sensor_Value):
-				print "---->Air Quality Alarm!"
+        			if (DEBUG):
+					print "---->Air Quality Alarm!"
 				activeAlarm = True
 
-		print "activeAlarm = ", activeAlarm		
+        	if (DEBUG):
+			print "activeAlarm = ", activeAlarm		
 		if (activeAlarm == True):
 			displayActiveAlarms()
 		else:
@@ -658,7 +665,8 @@ def finishAlarmStatementDisplay(list):
 def displayActiveAlarms():
 
 	# display Alarm
-	print "Display Alarms"
+        if (DEBUG):
+		print "Display Alarms"
     	if ((config.OLED_Present == True) and (state.SPP_State == state.SPP_States.Monitor)):
 
         	OLEDLock.acquire()
@@ -677,7 +685,8 @@ def displayActiveAlarms():
 		list = startAlarmStatementDisplay(display)
 
 		if (state.Alarm_Temperature >= state.Temperature):
-			print "---->Temperature Alarm!"
+        		if (DEBUG):
+				print "---->Temperature Alarm!"
 			displayAlarmOLEDDisplay(list, "Low Temp", 10)
 			publishAlarmToPubNub("Low Temp")
 			time.sleep(1.0)
@@ -739,7 +748,9 @@ if __name__ == '__main__':
     print returnStatusLine("Sunlight Sensor",config.Sunlight_Present)
     print returnStatusLine("hdc1000 Sensor",config.hdc1000_Present)
     print
+    print "----------------------"
     print "Future SmartPlantPi Expansions"
+    print "----------------------"
     print returnStatusLine("SunAirPlus",config.SunAirPlus_Present)
     print returnStatusLine("Lightning Mode",config.Lightning_Mode)
     print returnStatusLine("Solar Power Mode",config.SolarPower_Mode)
