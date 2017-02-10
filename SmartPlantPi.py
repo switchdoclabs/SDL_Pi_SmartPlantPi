@@ -6,7 +6,7 @@
 # SwitchDoc Labs, November 2016
 #
 
-SMARTPLANTPIVERSION = "006"
+SMARTPLANTPIVERSION = "007"
 #imports 
 
 import sys
@@ -737,7 +737,7 @@ def displayActiveAlarms():
 if __name__ == '__main__':
 
     print ""
-    print "SmartPlant Pi Version 1.0 - SwitchDoc Labs"
+    print "SmartPlant Pi Version "+SMARTPLANTPIVERSION+"  - SwitchDoc Labs"
     print ""
     print "Program Started at:"+ time.strftime("%Y-%m-%d %H:%M:%S")
     print ""
@@ -877,7 +877,8 @@ if __name__ == '__main__':
                                 print "button State = ", buttonState
                         buttonPush = False
 			# check for Alarm state
-			print " button == True SPP_State=%s ROTARY_State=%s" % ( state.SPP_Values[state.SPP_State],state.ROTARY_Values[state.ROTARY_State])
+                        if (DEBUG):
+				print " button == True SPP_State=%s ROTARY_State=%s" % ( state.SPP_Values[state.SPP_State],state.ROTARY_Values[state.ROTARY_State])
 			if (state.SPP_State == state.SPP_States.Alarm):
 				interpretButton.deactivateAlarms()
 			else:

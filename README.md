@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+February 2, 2017:  Initial Release Version 007<BR>
+Removed Debug lines<BR>
+
 February 2, 2017:  Initial Release Version 006
 
 # basic install instructions for supporting libraries
