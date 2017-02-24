@@ -40,11 +40,14 @@ hdc1000_Present = False
 
 ledGPIO = 26
 FlowSensorPin = 12
-pumpGPIO = 6
+
 buttonClick = 20
 rotaryButtonClick = 21
 Enc_A = 4
 Enc_B = 5
+
+USBControl = 16
+USBEnable = 19
 
 AirQualityADPin = 0
 moistureADPin = 1

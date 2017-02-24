@@ -6,7 +6,7 @@
 # SwitchDoc Labs, November 2016
 #
 
-SMARTPLANTPIVERSION = "007"
+SMARTPLANTPIVERSION = "008"
 #imports 
 
 import sys
@@ -162,16 +162,19 @@ rotary = SDL_Pi_RotaryButton.SDL_Pi_RotaryButton()
 ###############
 # pump setup
 ###############
-GPIO.setup(config.pumpGPIO, GPIO.OUT)  
-GPIO.output(config.pumpGPIO, GPIO.LOW)
+GPIO.setup(config.USBEnable, GPIO.OUT)
+GPIO.setup(config.USBControl, GPIO.OUT)
+GPIO.output(config.USBEnable, GPIO.LOW)
 
-def startPump():	
+def startPump():
         blinkLED(1,0.5)
-	GPIO.output(config.pumpGPIO, GPIO.HIGH)
+        GPIO.output(config.USBEnable, GPIO.LOW)
+        GPIO.output(config.USBControl, GPIO.HIGH)
 
 def stopPump():
-	blinkLED(1,0.5)
-	GPIO.output(config.pumpGPIO, GPIO.LOW)
+        blinkLED(1,0.5)
+        GPIO.output(config.USBEnable, GPIO.HIGH)
+        GPIO.output(config.USBControl, GPIO.LOW)
 
 def pumpWater(timeInSeconds):
     global NbTopsFan
@@ -406,10 +409,14 @@ def killLogger():
 
 def checkAndWater():
 
+
     print "checkandWater: %0.2f Threshold / %0.2f Current" % (state.Moisture_Threshold, state.Moisture_Humidity)
-    if (state.Moisture_Threshold > state.Moisture_Humidity):
-	    print "Watering Plant"
-            waterPlant();
+    if (state.Moisture_Humidity <= state.Alarm_Moisture_Sensor_Fault):
+	    print "No Watering - Moisture Sensor Fault Detected!"		
+    else:
+    	    if (state.Moisture_Threshold > state.Moisture_Humidity):
+	    	print "Watering Plant"
+            	waterPlant();
             
 
 
@@ -468,6 +475,25 @@ def saveState():
 	    output.close()
 
 
+def readMoistureValue():
+	if (config.ADS1115_Present):
+       		Moisture_Raw   = ads1115.readADCSingleEnded(config.moistureADPin, gain, sps)/7 # AIN0 wired to AirQuality Sensor
+       		Moisture_Humidity   = Moisture_Raw/7 
+       		if (DEBUG):
+               		print "Pre Limit Moisture_Humidity=", state.Moisture_Humidity
+       		if (Moisture_Humidity >100): 
+       		 	Moisture_Humidity = 100;
+       		if (Moisture_Humidity <0): 
+                 	Moisture_Humidity = 0;
+                    
+       		if (DEBUG):
+               		print "Moisture Humidity = %0.2f" % (Moisture_Humidity)
+       		if (DEBUG):
+              		print"------------------------------"
+	else:
+		Moisture_Humidity = 0.0
+
+	return Moisture_Humidity
 
 def updateState():
 
@@ -502,25 +528,14 @@ def updateState():
     
     
             if (config.ADS1115_Present):
-                Moisture_Raw   = ads1115.readADCSingleEnded(config.moistureADPin, gain, sps)/7 # AIN0 wired to AirQuality Sensor
-                state.Moisture_Humidity   = Moisture_Raw/7 
-            	if (DEBUG):
-                	print "Pre Limit Moisture_Humidity=", state.Moisture_Humidity
-                if (state.Moisture_Humidity >100): 
-                    state.Moisture_Humidity = 100;
-                if (state.Moisture_Humidity <0): 
-                    state.Moisture_Humidity = 0;
-                    
-            	if (DEBUG):
-                	print "Moisture Humidity = %0.2f" % (state.Moisture_Humidity)
-            	if (DEBUG):
-                	print"------------------------------"
+                state.Moisture_Humidity  = readMoistureValue() 
     
                 state.AirQuality_Sensor_Value =  AirQualitySensorLibrary.readAirQualitySensor(ads1115)
     
                 sensorList = AirQualitySensorLibrary.interpretAirQualitySensor(state.AirQuality_Sensor_Value)
             	if (DEBUG):
                 	print "Sensor Value=%i --> %s  | %i"% (state.AirQuality_Sensor_Value, sensorList[0], sensorList[1])
+
                 state.AirQuality_Sensor_Number = sensorList[1] 
                 state.AirQuality_Sensor_Text = sensorList[0] 
                  
@@ -684,6 +699,15 @@ def displayActiveAlarms():
 		# display alarms, one per screen on black screen
 		list = startAlarmStatementDisplay(display)
 
+
+    		
+    		if (state.Moisture_Humidity <= state.Alarm_Moisture_Sensor_Fault):
+        		if (DEBUG):
+				print "---->Moisture Sensor Fault"
+			displayAlarmOLEDDisplay(list, "MS Fault!", 10)
+			publishAlarmToPubNub("Mois Sen Fault")
+			time.sleep(1.0)
+
 		if (state.Alarm_Temperature >= state.Temperature):
         		if (DEBUG):
 				print "---->Temperature Alarm!"
@@ -758,7 +782,12 @@ if __name__ == '__main__':
     print returnStatusLine("MySQL Logging Mode",config.enable_MySQL_Logging)
     print
     print "----------------------"
-
+    value = readMoistureValue()
+    if (value <= state.Alarm_Moisture_Sensor_Fault):
+    	 print "Moisture Sensor Fault:   Not In Plant or not Present. Value %0.2f%%" % value 
+    else:
+    	print returnStatusLine("Moisture Sensor",True)
+    print "----------------------"
     scheduler = BackgroundScheduler()
 
     ##############

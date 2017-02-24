@@ -7,7 +7,10 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
-February 2, 2017:  Initial Release Version 007<BR>
+February 24, 2017:  Release Version 008<BR>
+Added code for Moisture Sensor Fault detection and blocking watering in the case of a fault<BR>
+
+February 2, 2017:  Release Version 007<BR>
 Removed Debug lines<BR>
 
 February 2, 2017:  Initial Release Version 006

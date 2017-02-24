@@ -60,6 +60,7 @@ Alarm_Temperature = 5.0
 Alarm_Moisture = 60.0
 Alarm_Water = False
 Alarm_Air_Quality = 10000 
+Alarm_Moisture_Sensor_Fault = 10.0
 
 Alarm_Active = False
 Alarm_Cancel = False

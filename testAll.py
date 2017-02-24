@@ -96,16 +96,19 @@ rotary = SDL_Pi_RotaryButton.SDL_Pi_RotaryButton()
 ###############
 # pump setup
 ###############
-GPIO.setup(config.pumpGPIO, GPIO.OUT)  
-GPIO.output(config.pumpGPIO, GPIO.LOW)
+GPIO.setup(config.USBEnable, GPIO.OUT)  
+GPIO.setup(config.USBControl, GPIO.OUT)  
+GPIO.output(config.USBEnable, GPIO.LOW)
 
 def startPump():	
         blinkLED(1,0.5)
-	GPIO.output(config.pumpGPIO, GPIO.HIGH)
+	GPIO.output(config.USBEnable, GPIO.LOW)
+	GPIO.output(config.USBControl, GPIO.HIGH)
 
 def stopPump():
 	blinkLED(1,0.5)
-	GPIO.output(config.pumpGPIO, GPIO.LOW)
+	GPIO.output(config.USBEnable, GPIO.HIGH)
+	GPIO.output(config.USBControl, GPIO.LOW)
 
 ###############
 # Sunlight SI1145 Sensor Setup
