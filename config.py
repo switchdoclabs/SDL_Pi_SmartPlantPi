@@ -17,6 +17,10 @@ fromAddress = "yourfromaddress@example.com"
 Pubnub_Publish_Key = "pub-c-xxxxxx"
 Pubnub_Subscribe_Key = "sub-c-xxxxxx"
 
+###########
+#Alexa Support (currently not released)
+############
+AlexaSupport = False
 
 ############
 #MySQL Logging and Password Information

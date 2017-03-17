@@ -30,7 +30,10 @@ Make sure you installed I2C as in this link:
 
 https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c
 
-#Installing apscheduler
+#Installing apscheduler and pil
+
+sudo apt-get install python-pip
+sudo pip uninstall pil
 
 sudo pip install --upgrade setuptools pip <BR>
 

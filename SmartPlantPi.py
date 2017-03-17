@@ -443,8 +443,11 @@ def returnStatusLine(device, state):
 
 def outputStateToJSON():
 
-    with open('/var/www/html/SmartPlantState.json', 'w') as outfile:
-        json.dump(
+
+    if (config.AlexaSupport == True):
+        try:
+            with open('/var/www/html/SmartPlantState.json', 'w') as outfile:
+                json.dump(
                       {"Temperature": '{0:0.1f} deg {1}'.format(returnTemperatureCF(state.Temperature),returnTemperatureCFUnit()),
                       "Humidity": '{0:0.1f} %'.format(state.Humidity), 
                       "Sunlight_Vis": '{0:0.1f} lux'.format(state.Sunlight_Vis), 
@@ -458,7 +461,8 @@ def outputStateToJSON():
                       "SamrtPlantPi_Version":'{}'.format(SMARTPLANTPIVERSION), 
                       "Sample_Timestamp":'{}'.format(time.strftime("%H:%M %d-%m-%Y "))}, 
                       outfile)
-
+        except:
+            pass
 
 def saveState():
 	    output = open('SPPState.pkl', 'wb')
