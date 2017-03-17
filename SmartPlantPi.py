@@ -6,7 +6,7 @@
 # SwitchDoc Labs, November 2016
 #
 
-SMARTPLANTPIVERSION = "008"
+SMARTPLANTPIVERSION = "009"
 #imports 
 
 import sys

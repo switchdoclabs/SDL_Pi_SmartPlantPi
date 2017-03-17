@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+March 17, 2017:  Release Version 009<BR>
+Added Alexa configuration variable to block out writing json file<BR>
+
 February 24, 2017:  Release Version 008<BR>
 Added code for Moisture Sensor Fault detection and blocking watering in the case of a fault<BR>
 
