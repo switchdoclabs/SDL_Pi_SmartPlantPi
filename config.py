@@ -38,6 +38,7 @@ OLED_Present = False
 Sunlight_Present = False
 hdc1000_Present = False
 
+SunAirPlus_Present = False
 ############
 #pin defines
 ############

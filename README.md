@@ -2,10 +2,13 @@
 # Smart Plant Pi Raspberry Pi Software
 # SDL_Pi_SmartPlantPi
 #
-# SwitchDoc Labs February 2017
+# SwitchDoc Labs March 2017
 #
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
+
+March 21, 2017:  Release Version 010<BR>
+Added SunAirPlus configuration variable to allow execution <BR>
 
 March 17, 2017:  Release Version 009<BR>
 Added Alexa configuration variable to block out writing json file<BR>
