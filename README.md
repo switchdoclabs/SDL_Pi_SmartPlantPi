@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+March 26, 2017:  Release Version 011<BR>
+Added Lightning_Mode configuration variable to allow execution <BR>
+
 March 21, 2017:  Release Version 010<BR>
 Added SunAirPlus configuration variable to allow execution <BR>
 
