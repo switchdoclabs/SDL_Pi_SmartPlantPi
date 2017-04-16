@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+April 17, 2017:  Release Version 012<BR>
+Modified code (backwardly compatible) to install Grove PowerSave to make Moisture Sensor more reliable and longer lasting<BR>
+
 March 26, 2017:  Release Version 011<BR>
 Added Lightning_Mode configuration variable to allow execution <BR>
 

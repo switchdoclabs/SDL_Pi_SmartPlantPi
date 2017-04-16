@@ -60,5 +60,7 @@ USBControl = 16
 USBEnable = 19
 
 AirQualityADPin = 0
+
 moistureADPin = 1
+moisturePower = 6
 

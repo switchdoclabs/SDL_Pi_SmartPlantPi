@@ -198,10 +198,17 @@ GPIO.add_event_detect(config.FlowSensorPin,GPIO.FALLING,callback=flowSensorEvent
 # set up interrupts to handle buttonClick
 GPIO.add_event_detect(config.buttonClick,GPIO.FALLING,callback=buttonClickEventHandler, bouncetime=100)
 
+############
+# Setup Moisture Pin for GrovePowerSave
+############
+GPIO.setup(config.moisturePower,GPIO.OUT)
+GPIO.output(config.moisturePower, GPIO.LOW)
+
 #
 
 try:  
 	startPump()
+
 
 	NbTopsFan = 0   #Set NbTops to 0 ready for calculations
   	#sei();      #Enables interrupts
@@ -277,7 +284,10 @@ try:
 
 
         if (config.ADS1115_Present):
+            GPIO.output(config.moisturePower, GPIO.HIGH)
             Moisture_Humidity   = ads1115.readADCSingleEnded(config.moistureADPin, gain, sps)/7 # AIN0 wired to AirQuality Sensor
+            GPIO.output(config.moisturePower, GPIO.LOW)
+
             print Moisture_Humidity
 	    Moisture_Humidity = Moisture_Humidity / 7.0
             if (Moisture_Humidity >100): 

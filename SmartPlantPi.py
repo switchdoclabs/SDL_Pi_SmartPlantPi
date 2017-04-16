@@ -3,10 +3,10 @@
 #
 # SmartPlantPi 
 #
-# SwitchDoc Labs, November 2016
+# SwitchDoc Labs, Initial:  November 2016
 #
 
-SMARTPLANTPIVERSION = "011"
+SMARTPLANTPIVERSION = "012"
 #imports 
 
 import sys
@@ -478,10 +478,18 @@ def saveState():
 
 	    output.close()
 
+############
+# Setup Moisture Pin for GrovePowerSave
+############
+GPIO.setup(config.moisturePower,GPIO.OUT)
+GPIO.output(config.moisturePower, GPIO.LOW)
 
 def readMoistureValue():
 	if (config.ADS1115_Present):
+                GPIO.output(config.moisturePower, GPIO.HIGH)
        		Moisture_Raw   = ads1115.readADCSingleEnded(config.moistureADPin, gain, sps)/7 # AIN0 wired to AirQuality Sensor
+                GPIO.output(config.moisturePower, GPIO.LOW)
+
        		Moisture_Humidity   = Moisture_Raw/7 
        		if (DEBUG):
                		print "Pre Limit Moisture_Humidity=", state.Moisture_Humidity
