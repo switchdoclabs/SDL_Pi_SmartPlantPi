@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+June 26, 2017:  Release Version 013<BR>
+Accuracy Problem with the HDC1080 Temperature and Humidity Fixed
+
 April 17, 2017:  Release Version 012<BR>
 Modified code (backwardly compatible) to install Grove PowerSave to make Moisture Sensor more reliable and longer lasting<BR>
 

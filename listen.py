@@ -1,6 +1,6 @@
 
 # subscribe to your PubNub channel using this code
-# SwitchDoc Labs November, 2016
+# SwitchDoc Labs May, 2017
 # updated for PubNub 4.02 code
 
 import pubnub
@@ -10,8 +10,7 @@ from pubnub.pubnub import PubNub, SubscribeListener, SubscribeCallback, PNOperat
 
 # configuration
 Pubnub_Publish_Key = "pub-c-xxxxx"
-Pubnub_Subscribe_Key = "sub-c-90d825a8-b012-11e6-9ab5-0619f8945a4f"
-
+Pubnub_Subscribe_Key = "sub-c-xxxxx"
 
 pnconf = PNConfiguration()
 
