@@ -2,13 +2,16 @@
 # Smart Plant Pi Raspberry Pi Software
 # SDL_Pi_SmartPlantPi
 #
-# SwitchDoc Labs March 2017
+# SwitchDoc Labs June 2017
 #
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
 June 26, 2017:  Release Version 013<BR>
 Accuracy Problem with the HDC1080 Temperature and Humidity Fixed
+
+
+May 27, 2017:  Fixed Typo in README.md - Thanks Daniels!
 
 April 17, 2017:  Release Version 012<BR>
 Modified code (backwardly compatible) to install Grove PowerSave to make Moisture Sensor more reliable and longer lasting<BR>
@@ -47,8 +50,9 @@ https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configurin
 
 #Installing apscheduler and pil
 
-sudo apt-get install python-pip
-sudo pip uninstall pil
+sudo apt-get install python-pip<BR>
+
+sudo apt-get install python-pil <BR>
 
 sudo pip install --upgrade setuptools pip <BR>
 
