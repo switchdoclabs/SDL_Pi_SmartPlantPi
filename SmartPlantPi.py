@@ -6,7 +6,7 @@
 # SwitchDoc Labs, Initial:  November 2016
 #
 
-SMARTPLANTPIVERSION = "013"
+SMARTPLANTPIVERSION = "014"
 #imports 
 
 import sys
@@ -73,7 +73,7 @@ import state
 # Debug True or False
 ############
 
-DEBUG = False
+DEBUG = True
 
 #initialization
 
@@ -529,12 +529,13 @@ def updateState():
                     ################
                     state.Sunlight_Vis = SI1145Lux.SI1145_VIS_to_Lux(Sunlight_Sensor.readVisible())
                     state.Sunlight_IR = SI1145Lux.SI1145_IR_to_Lux(Sunlight_Sensor.readIR())
-                    state_Sunlight_UV = Sunlight_Sensor.readUV()
+                    state.Sunlight_UV = Sunlight_Sensor.readUV()
                     state.Sunlight_UVIndex = state.Sunlight_UV / 100.0
 
             	    if (DEBUG):
                     	print 'Sunlight Visible:  ' + str(state.Sunlight_Vis)
                     	print 'Sunlight state.Sunlight_IR:       ' + str(state.Sunlight_IR)
+                    	print 'Sunlight UV Index (RAW): ' + str(state.Sunlight_UV)
                     	print 'Sunlight UV Index: ' + str(state.Sunlight_UVIndex)
                     ################
     

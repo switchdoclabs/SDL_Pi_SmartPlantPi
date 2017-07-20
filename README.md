@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+July 20, 2017:  Release Version 014<BR>
+UV Index Typo and JSON update for freeboard.io
+
 June 26, 2017:  Release Version 013<BR>
 Accuracy Problem with the HDC1080 Temperature and Humidity Fixed
 

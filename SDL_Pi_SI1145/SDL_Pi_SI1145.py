@@ -254,7 +254,10 @@ class SDL_Pi_SI1145(object):
 
         # returns the UV index * 100 (divide by 100 to get the index)
         def readUV(self):
-                return self._device.readU16LE(0x2C)
+
+                returnValue = self._device.readU16LE(0x2C)
+                # print "readUV=", returnValue
+                return returnValue 
 
         #returns visible + IR light levels
         def readVisible(self):
