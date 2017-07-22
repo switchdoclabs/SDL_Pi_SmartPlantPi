@@ -65,7 +65,11 @@ def interpretButton(display, OLEDLock, buttonState):
 		#############
 		# Standalone Button Interface	
 		#############
+                if (DEBUG):
+                    print "Attempt OLEDLock acquired"
 		OLEDLock.acquire()
+                if (DEBUG):
+                    print "OLEDLock acquired"
 		list = startStatementDisplay(display)
 		# one button push = water now full
 		if (buttonState == 1):
@@ -91,6 +95,10 @@ def interpretButton(display, OLEDLock, buttonState):
             		state.Last_Event = ("Moisture Lim Set to %6.1f: " % state.Moisture_Threshold)+time.strftime("%Y-%m-%d %H:%M:%S")
 
 		finishStatementDisplay(display,list)
+                if (DEBUG):
+                    print "Attempt OLEDLock released"
 		OLEDLock.release()
+                if (DEBUG):
+                    print "OLEDLock released"
 		buttonPush = False
 

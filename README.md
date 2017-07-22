@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+July 20, 2017:  Release Version 015<BR>
+Frozen Update State Moisture Detection (Water) Lock up fixed
+
 July 20, 2017:  Release Version 014<BR>
 UV Index Typo and JSON update for freeboard.io
 

@@ -290,7 +290,11 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 
 
 			# set up appropriate values
-			OLEDLock.acquire()
+			if (DEBUG):
+                               print  "Attempt OLEDLock acquired"
+                        OLEDLock.acquire()
+			if (DEBUG):
+                               print  "OLEDLock acquired"
 
 			list = setupLabelRotaryOLEDDisplay(display)
 
@@ -473,7 +477,11 @@ def interpretRotary(rotary, display, OLEDLock, scheduler, publishStatusToPubNub,
 			closeRotaryOLEDDisplay(list)
 			saveState()
 
+			if (DEBUG):
+                               print  "Attempt OLEDLock released"
 			OLEDLock.release()
+			if (DEBUG):
+                               print  "OLEDLock released"
 			state.ROTARY_State = state.ROTARY_States.Idle
 			state.SPP_State = state.SPP_States.Monitor
             		publishStatusToPubNub()

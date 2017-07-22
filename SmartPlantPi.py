@@ -6,7 +6,7 @@
 # SwitchDoc Labs, Initial:  November 2016
 #
 
-SMARTPLANTPIVERSION = "014"
+SMARTPLANTPIVERSION = "015"
 #imports 
 
 import sys
@@ -79,6 +79,13 @@ DEBUG = True
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
+
+################
+# Update State Lock - keeps smapling from being interrupted (like by checkAndWater)
+################
+UpdateStateLock = threading.Lock()
+
+
 
 ###############
 # Optional LED
@@ -196,6 +203,15 @@ def pumpWater(timeInSeconds):
     return totalWaterPumped
 
 def waterPlant():
+            # We want to put off this state if Update State is .is locked.   That will prevent Update State from being hosed by this state machine
+            if (DEBUG):
+                  print "WP-Attempt UpdateStateLock acquired"
+	    UpdateStateLock.acquire()
+            if (DEBUG):
+                  print "WP-UpdateStateLock acquired"
+
+
+
             previousState = state.SPP_State;
 	    #if(state.SPP_State == state.SPP_States.Monitor):
             state.SPP_State =state.SPP_States.Watering
@@ -212,6 +228,11 @@ def waterPlant():
             state.SPP_State = previousState
             publishStatusToPubNub()
             state.Last_Event = "Plant Watered at: "+time.strftime("%Y-%m-%d %H:%M:%S")
+            if (DEBUG):
+                  print "WP-Attempt UpdateStateLock released"
+            UpdateStateLock.release()
+            if (DEBUG):
+                  print "WP-UpdateStateLock released"
 
 ###############
 # Sunlight SI1145 Sensor Setup
@@ -492,7 +513,7 @@ def readMoistureValue():
 
        		Moisture_Humidity   = Moisture_Raw/7 
        		if (DEBUG):
-               		print "Pre Limit Moisture_Humidity=", state.Moisture_Humidity
+               		print "Pre Limit Moisture_Humidity=", Moisture_Humidity
        		if (Moisture_Humidity >100): 
        		 	Moisture_Humidity = 100;
        		if (Moisture_Humidity <0): 
@@ -509,6 +530,15 @@ def readMoistureValue():
 
 def updateState():
 
+  if (DEBUG):
+      print "Attempt UpdateStateLock acquired"
+  UpdateStateLock.acquire()
+  if (DEBUG):
+      print "UpdateStateLock acquired"
+
+
+  # catch Exceptions and MAKE SURE THE LOCK is released!
+  try:
     if (state.SPP_State == state.SPP_States.Monitor):  
             state.SPP_State =state.SPP_States.Sampling
             publishStatusToPubNub()
@@ -568,14 +598,36 @@ def updateState():
             outputStateToJSON()
 
             if (config.OLED_Present) and (state.SPP_State == state.SPP_States.Monitor) :
+
+
+                    if (DEBUG):
+                          print "Attempt OLEDLock acquired"
 		    OLEDLock.acquire()
+                    if (DEBUG):
+                          print "OLEDLock acquired"
                     Scroll_SSD1306.addLineOLED(display,  ("----------"))
                     Scroll_SSD1306.addLineOLED(display,  ("Plant Moisture = \t%0.2f %%")%(state.Moisture_Humidity))
                     Scroll_SSD1306.addLineOLED(display,  ("Temperature = \t%0.2f %s")%(returnTemperatureCF(state.Temperature), returnTemperatureCFUnit()))
                     Scroll_SSD1306.addLineOLED(display,  ("Humidity =\t%0.2f %%")%(state.Humidity))
                     Scroll_SSD1306.addLineOLED(display,  ("Air Qual = %d/%s")%(state.AirQuality_Sensor_Value, state.AirQuality_Sensor_Text))
                     Scroll_SSD1306.addLineOLED(display,  ("Sunlight = \t%0.2f Lux")%(state.Sunlight_Vis))
+                    if (DEBUG):
+                        print "Attempt OLEDLock released"
 		    OLEDLock.release()
+                    if (DEBUG):
+ 
+                        print "OLEDLock released"
+ 
+  except:
+    if (DEBUG):
+        print "Exception Raised in Update State"
+  finally:
+ 
+    if (DEBUG):
+          print "Attempt UpdateStateLock released"
+    UpdateStateLock.release()
+    if (DEBUG):
+          print "UpdateStateLock released"
 
 
 #############################
@@ -697,7 +749,11 @@ def displayActiveAlarms():
 		print "Display Alarms"
     	if ((config.OLED_Present == True) and (state.SPP_State == state.SPP_States.Monitor)):
 
+                if (DEBUG):
+                      print "Attempt OLEDLock acquired"
         	OLEDLock.acquire()
+                if (DEBUG):
+                      print "OLEDLock acquired"
 		
         	state.SPP_State =state.SPP_States.Alarm
                 publishStatusToPubNub()
@@ -759,7 +815,11 @@ def displayActiveAlarms():
         	state.SPP_State = state.SPP_States.Monitor
                 publishStatusToPubNub()
 
+                if (DEBUG):
+                    print "Attempt OLEDLock released"
         	OLEDLock.release()
+                if (DEBUG):
+                    print "OLEDLock released"
 
 		if (state.Alarm_Active == False):   # it has been disabled
 			publishAlarmToPubNub("deactivated")
@@ -868,7 +928,11 @@ if __name__ == '__main__':
     publishEventToPubNub()
 
     if (config.OLED_Present):
+        if (DEBUG):
+             print "Attempt OLEDLock acquired"
         OLEDLock.acquire()
+        if (DEBUG):
+             print "OLEDLock acquired"
 	# display logo
     	image = Image.open('SmartPlantPiSquare128x64.ppm').convert('1')
 
@@ -879,7 +943,11 @@ if __name__ == '__main__':
 
 	Scroll_SSD1306.addLineOLED(display,  ("    Welcome to "))
         Scroll_SSD1306.addLineOLED(display,  ("  SmartPlant Pi "))
+        if (DEBUG):
+             print "Attempt OLEDLock released"
         OLEDLock.release()
+        if (DEBUG):
+             print "OLEDLock released"
 
     # set up interrupts to handle flowsensor
     GPIO.add_event_detect(config.FlowSensorPin,GPIO.FALLING,callback=flowSensorEventHandler, bouncetime=100)
