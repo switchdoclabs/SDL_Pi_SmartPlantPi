@@ -2,7 +2,7 @@
 # Smart Plant Pi Raspberry Pi Software
 # SDL_Pi_SmartPlantPi
 #
-# SwitchDoc Labs June 2017
+# SwitchDoc Labs July 2017
 #
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
