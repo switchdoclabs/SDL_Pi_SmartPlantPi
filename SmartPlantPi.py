@@ -73,7 +73,7 @@ import state
 # Debug True or False
 ############
 
-DEBUG = True
+DEBUG = False
 
 #initialization
 
