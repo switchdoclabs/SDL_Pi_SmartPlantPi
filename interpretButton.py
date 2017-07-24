@@ -18,6 +18,10 @@ import Adafruit_SSD1306
 
 import Scroll_SSD1306
 
+# define button debug
+
+DEBUGBUT = False
+
 def invertDisplay(display):
 	display.command(Adafruit_SSD1306.SSD1306_INVERTDISPLAY)
 
@@ -65,10 +69,10 @@ def interpretButton(display, OLEDLock, buttonState):
 		#############
 		# Standalone Button Interface	
 		#############
-                if (DEBUG):
+                if (DEBUGBUT):
                     print "Attempt OLEDLock acquired"
 		OLEDLock.acquire()
-                if (DEBUG):
+                if (DEBUGBUT):
                     print "OLEDLock acquired"
 		list = startStatementDisplay(display)
 		# one button push = water now full
@@ -95,10 +99,10 @@ def interpretButton(display, OLEDLock, buttonState):
             		state.Last_Event = ("Moisture Lim Set to %6.1f: " % state.Moisture_Threshold)+time.strftime("%Y-%m-%d %H:%M:%S")
 
 		finishStatementDisplay(display,list)
-                if (DEBUG):
+                if (DEBUGBUT):
                     print "Attempt OLEDLock released"
 		OLEDLock.release()
-                if (DEBUG):
+                if (DEBUGBUT):
                     print "OLEDLock released"
 		buttonPush = False
 

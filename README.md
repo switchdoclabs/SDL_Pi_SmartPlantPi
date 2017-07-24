@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+July 24, 2017:  Release Version 016<BR>
+Fixed DEBUG related issues in interpretRotary and interpretButton
+
 July 20, 2017:  Release Version 015<BR>
 Frozen Update State Moisture Detection (Water) Lock up fixed
 
