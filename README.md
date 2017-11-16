@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+November 17, 2017:  Release Version 017<BR>
+Fixed input name clash from OS Update
+
 July 24, 2017:  Release Version 016<BR>
 Fixed DEBUG related issues in interpretRotary and interpretButton
 

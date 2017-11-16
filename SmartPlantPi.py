@@ -6,7 +6,7 @@
 # SwitchDoc Labs, Initial:  November 2016
 #
 
-SMARTPLANTPIVERSION = "016"
+SMARTPLANTPIVERSION = "017"
 #imports 
 
 import sys
@@ -27,7 +27,7 @@ sys.path.append('./SDL_Pi_SSD1306')
 sys.path.append('./Adafruit_Python_SSD1306')
 sys.path.append('./SDL_Pi_SI1145')
 sys.path.append('./SDL_Pi_RotaryButton')
-sys.path.append('./SDL_Pi_Grove4Ch16BitADC/Adafruit_ADS1x15')
+sys.path.append('./SDL_Pi_Grove4Ch16BitADC/SDL_Adafruit_ADS1x15')
 
 import interpretButton
 import interpretRotary
@@ -46,7 +46,7 @@ import Scroll_SSD1306
 import SDL_Pi_SI1145
 import SI1145Lux
 
-from Adafruit_ADS1x15 import ADS1x15
+from SDL_Adafruit_ADS1x15 import ADS1x15
 
 import AirQualitySensorLibrary 
 
