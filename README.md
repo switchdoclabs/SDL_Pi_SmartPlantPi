@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+November 22, 2017:  Release Version 017<BR>
+Read README.md for version class reinstall of Adafruit_Python_GPIO
+
 November 17, 2017:  Release Version 017<BR>
 Fixed input name clash from OS Update
 
