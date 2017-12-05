@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+December 5, 2017:  Release Version 017<BR>
+Fixed directory names in testAll.py - thanks Faltek!
+
 November 22, 2017:  Release Version 017<BR>
 Read README.md for version class reinstall of Adafruit_Python_GPIO
 

@@ -22,7 +22,7 @@ sys.path.append('./Adafruit_Python_SSD1306')
 sys.path.append('./SDL_Pi_SI1145')
 sys.path.append('./SDL_Pi_RotaryButton')
 
-sys.path.append('./SDL_Pi_Grove4Ch16BitADC/Adafruit_ADS1x15')
+sys.path.append('./SDL_Pi_Grove4Ch16BitADC/SDL_Adafruit_ADS1x15')
 
 import SDL_Pi_HDC1000
 import SDL_Pi_RotaryButton
@@ -33,7 +33,7 @@ import Scroll_SSD1306
 
 import SDL_Pi_SI1145
 
-from Adafruit_ADS1x15 import ADS1x15
+from SDL_Adafruit_ADS1x15 import ADS1x15
 
 import AirQualitySensorLibrary 
 
