@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+January 8, 2018:  Release Version 019<BR>
+Support for Alexa
+
 January 5, 2018:  Release Version 018<BR>
 Fixed problems with new Release of RPi OS Stretch
 

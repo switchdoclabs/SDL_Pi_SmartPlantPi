@@ -2,7 +2,7 @@
 #
 #
 # configuration file - contains customization for exact system
-# JCS 11/8/2013
+# 
 #
 
 mailUser = "yourusename"
@@ -17,10 +17,6 @@ fromAddress = "yourfromaddress@example.com"
 Pubnub_Publish_Key = "pub-c-xxxxxx"
 Pubnub_Subscribe_Key = "sub-c-xxxxxx"
 
-###########
-#Alexa Support (currently not released)
-############
-AlexaSupport = False
 
 ############
 #MySQL Logging and Password Information

@@ -6,7 +6,7 @@
 # SwitchDoc Labs
 #
 
-SMARTPLANTPIVERSION = "018"
+SMARTPLANTPIVERSION = "019"
 #imports 
 
 import sys
@@ -396,6 +396,7 @@ def publishStateToPubNub():
         myMessage["SmartPlantPi_CurrentStatus"] = "{}".format(state.SPP_Values[state.SPP_State])
         myMessage["SmartPlantPi_Moisture_Threshold"] = '{:4.1f}'.format(state.Moisture_Threshold)
         myMessage["SmartPlantPi_Version"] = '{}'.format(SMARTPLANTPIVERSION) 
+        myMessage["TimeStamp"] = '{}'.format( datetime.now().strftime( "%m/%d/%Y %H:%M:%S"))
         myMessage["SmartPlantPi_Last_Event"] = "{}".format(state.Last_Event)
         if (state.Pump_Water_Full == 0): 
             myMessage["SmartPlantPi_Water_Full_Text"] = "{}".format("Empty" )
@@ -408,6 +409,7 @@ def publishStateToPubNub():
         	print myMessage
 
         pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        pubnub.publish().channel('SmartPlantPi_Alexa').message(myMessage).async(publish_callback)
 
         blinkLED(3,0.200)
 
@@ -462,28 +464,8 @@ def returnStatusLine(device, state):
 # get and store sensor state
 #############################
 
-def outputStateToJSON():
 
 
-    if (config.AlexaSupport == True):
-        try:
-            with open('/var/www/html/SmartPlantState.json', 'w') as outfile:
-                json.dump(
-                      {"Temperature": '{0:0.1f} deg {1}'.format(returnTemperatureCF(state.Temperature),returnTemperatureCFUnit()),
-                      "Humidity": '{0:0.1f} %'.format(state.Humidity), 
-                      "Sunlight_Vis": '{0:0.1f} lux'.format(state.Sunlight_Vis), 
-                      "Sunlight_IR": '{0:0.1f} lux'.format(state.Sunlight_IR), 
-                      "Sunlight_UVIndex": '{0:0.1f}'.format(state.Sunlight_UVIndex), 
-                      "Moisture_Humidity": '{0:0.1f} %'.format(state.Moisture_Humidity), 
-                      "Pump_Water_Full": '{}'.format(state.Pump_Water_Full), 
-                      "AirQuality_Sensor_Text":'{}'.format(state.AirQuality_Sensor_Text), 
-                      "AirQuality_Sensor_Number":'{}'.format(state.AirQuality_Sensor_Number), 
-                      "Moisture_Threshold":'{0:0.1f}'.format(state.Moisture_Threshold), 
-                      "SamrtPlantPi_Version":'{}'.format(SMARTPLANTPIVERSION), 
-                      "Sample_Timestamp":'{}'.format(time.strftime("%H:%M %d-%m-%Y "))}, 
-                      outfile)
-        except:
-            pass
 
 def saveState():
 	    output = open('SPPState.pkl', 'wb')
@@ -595,7 +577,6 @@ def updateState():
             state.SPP_State =state.SPP_States.Monitor
             publishStatusToPubNub()
         
-            outputStateToJSON()
 
             if (config.OLED_Present) and (state.SPP_State == state.SPP_States.Monitor) :
 
@@ -905,7 +886,7 @@ if __name__ == '__main__':
 
 
     # send State to PubNub 
-    scheduler.add_job(publishStateToPubNub, 'interval', seconds=10)
+    scheduler.add_job(publishStateToPubNub, 'interval', seconds=30)
 
     # check and water  
     scheduler.add_job(checkAndWater, 'interval', minutes=15)
