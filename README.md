@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+January 8, 2018:  Release Version 020<BR>
+Reduced Status Traffic to PubNub and reduced data updates to every 60 seconds
+
 January 8, 2018:  Release Version 019<BR>
 Support for Alexa
 

@@ -148,7 +148,7 @@ def buttonSampleEnd():
 
 	buttonInProgress = False
 	buttonPush = True
-        publishStatusToPubNub()
+        #publishStatusToPubNub()
         #state.SPP_State =state.SPP_States.Monitor
 	#print "button Sample End back to Monitor"
 
@@ -523,7 +523,7 @@ def updateState():
   try:
     if (state.SPP_State == state.SPP_States.Monitor):  
             state.SPP_State =state.SPP_States.Sampling
-            publishStatusToPubNub()
+            #publishStatusToPubNub()
 	    if (DEBUG):
             	print "----------------- "
             	print "Update State"
@@ -575,7 +575,7 @@ def updateState():
             		print 'Humidity         = {0:0.2f} %'.format(state.Humidity)
     
             state.SPP_State =state.SPP_States.Monitor
-            publishStatusToPubNub()
+            #publishStatusToPubNub()
         
 
             if (config.OLED_Present) and (state.SPP_State == state.SPP_States.Monitor) :
@@ -886,7 +886,7 @@ if __name__ == '__main__':
 
 
     # send State to PubNub 
-    scheduler.add_job(publishStateToPubNub, 'interval', seconds=30)
+    scheduler.add_job(publishStateToPubNub, 'interval', seconds=60)
 
     # check and water  
     scheduler.add_job(checkAndWater, 'interval', minutes=15)
