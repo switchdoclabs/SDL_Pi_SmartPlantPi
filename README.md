@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+January 5, 2018:  Release Version 018<BR>
+Fixed problems with new Release of RPi OS Stretch
+
 December 5, 2017:  Release Version 017<BR>
 Fixed directory names in testAll.py - thanks Faltek!
 

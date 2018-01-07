@@ -26,7 +26,7 @@ draw = ImageDraw.Draw(image)
 # Load default font.
 
 #font = ImageFont.load_default()
-font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Regular.ttf', 10)
+font = ImageFont.truetype('roboto/Roboto-Regular.ttf', 10)
 
 def addLineOLED(display, text):
 

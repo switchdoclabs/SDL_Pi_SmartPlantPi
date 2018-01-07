@@ -144,8 +144,7 @@ def startRotaryStatementDisplay(display):
 	draw = ImageDraw.Draw(image)
 	# Load default font.
 	#font = ImageFont.load_default()
-	font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Regular.ttf', 12)
-	#font = ImageFont.truetype('/usr/share/fonts/truetype/freefont/FreeMono.ttf', 12)
+	font = ImageFont.truetype('roboto/Roboto-Regular.ttf', 12)
 	display.clear()
 	display.display()
 	return [image, draw, font, display]
@@ -171,7 +170,7 @@ def displayRotaryValueOLEDDisplay(list, text,lengthofline=18):
 	draw = list[1]
 	font = list[2]
 	display = list[3]
-	font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf', 25)
+	font = ImageFont.truetype('roboto/Roboto-Bold.ttf', 25)
 	draw.rectangle((0,3*12-2,128,6*12+2), outline=0, fill=255)
 	draw.text((0, 3*12-4),    centerText(text, lengthofline),  font=font, fill=0)
 

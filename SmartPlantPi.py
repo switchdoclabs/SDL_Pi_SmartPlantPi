@@ -3,10 +3,10 @@
 #
 # SmartPlantPi 
 #
-# SwitchDoc Labs, Initial:  November 2016
+# SwitchDoc Labs
 #
 
-SMARTPLANTPIVERSION = "017"
+SMARTPLANTPIVERSION = "018"
 #imports 
 
 import sys
@@ -695,7 +695,7 @@ def startAlarmStatementDisplay(display):
         image = Image.new('1', (width, height))
         draw = ImageDraw.Draw(image)
         # Load font.
-        font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Regular.ttf', 12)
+        font = ImageFont.truetype('roboto/Roboto-Regular.ttf', 12)
         display.clear()
         display.display()
         return [image, draw, font, display]
@@ -707,7 +707,7 @@ def displayAlarmStatementOLEDDisplay(list, text,lengthofline=18):
         font = list[2]
         display = list[3]
 
-        font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-BoldItalic.ttf', 25)
+        font = ImageFont.truetype('roboto/Roboto-BoldItalic.ttf', 25)
         draw.rectangle((0,0,127,5*12+2), outline=0, fill=255)
         draw.text((0, 1*12),    centerText(text, lengthofline),  font=font, fill=0)
 
@@ -724,7 +724,7 @@ def displayAlarmOLEDDisplay(list, text, lengthofline=18):
         font = list[2]
         display = list[3]
 
-        font = ImageFont.truetype('/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf', 25)
+        font = ImageFont.truetype('roboto/Roboto-Bold.ttf', 25)
         draw.rectangle((0,0,127,5*12+2), outline=0, fill=0)
         draw.text((0, 2*12-4),    centerText(text, lengthofline),  font=font, fill=255)
 
