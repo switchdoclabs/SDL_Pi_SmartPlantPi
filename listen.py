@@ -4,13 +4,24 @@
 # updated for PubNub 4.02 code
 
 import pubnub
- 
+import logging; 
+logging.basicConfig(level=logging.INFO) 
+
+
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub, SubscribeListener, SubscribeCallback, PNOperationType, PNStatusCategory
 
+
+# Check for user imports
+try:
+            import conflocal as config
+except ImportError:
+            import config
+
+
 # configuration
-Pubnub_Publish_Key = "pub-c-xxxxx"
-Pubnub_Subscribe_Key = "sub-c-xxxxx"
+Pubnub_Publish_Key = config.Pubnub_Publish_Key
+Pubnub_Subscribe_Key = config.Pubnub_Subscribe_Key 
 
 pnconf = PNConfiguration()
 

@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+March 20, 2018:  Release Version 021<BR>
+Minor update for "No Handlers could be found...." error.  Modified listen.py to use config.py<BR>
+
 January 8, 2018:  Release Version 020<BR>
 Reduced Status Traffic to PubNub and reduced data updates to every 60 seconds
 

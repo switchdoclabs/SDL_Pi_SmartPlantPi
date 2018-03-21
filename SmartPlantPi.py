@@ -6,7 +6,7 @@
 # SwitchDoc Labs
 #
 
-SMARTPLANTPIVERSION = "020"
+SMARTPLANTPIVERSION = "021"
 #imports 
 
 import sys
@@ -16,6 +16,10 @@ import time
 import threading
 import json
 import pickle
+
+import logging; 
+logging.basicConfig(level=logging.INFO) 
+
 
 from pubnub.pubnub import PubNub
 from pubnub.pubnub import PNConfiguration
