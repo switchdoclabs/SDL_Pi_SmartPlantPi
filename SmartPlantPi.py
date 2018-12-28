@@ -6,7 +6,7 @@
 # SwitchDoc Labs
 #
 
-SMARTPLANTPIVERSION = "021"
+SMARTPLANTPIVERSION = "022"
 #imports 
 
 import sys
@@ -243,10 +243,10 @@ def waterPlant():
 ################
 
 
-Sunlight_Sensor = SDL_Pi_SI1145.SDL_Pi_SI1145()
 time.sleep(1)
 
 try:
+        Sunlight_Sensor = SDL_Pi_SI1145.SDL_Pi_SI1145()
         state.Sunlight_Visible = SI1145Lux.SI1145_VIS_to_Lux(Sunlight_Sensor.readVisible())
 
         config.Sunlight_Present = True
@@ -359,7 +359,8 @@ def publishStatusToPubNub():
         if (DEBUG):
         	print myMessage
 
-        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        #pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage)
 
 def publishEventToPubNub():
 
@@ -369,7 +370,8 @@ def publishEventToPubNub():
         if (DEBUG):
         	print myMessage
 
-        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        #pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage)
 
 def publishAlarmToPubNub(alarmText):
 
@@ -379,7 +381,8 @@ def publishAlarmToPubNub(alarmText):
         if (DEBUG):
         	print myMessage
 
-        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        #pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage)
 
 def publishStateToPubNub():
 	
@@ -412,8 +415,10 @@ def publishStateToPubNub():
         if (DEBUG):
         	print myMessage
 
-        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
-        pubnub.publish().channel('SmartPlantPi_Alexa').message(myMessage).async(publish_callback)
+        #pubnub.publish().channel('SmartPlantPi_Data').message(myMessage).async(publish_callback)
+        pubnub.publish().channel('SmartPlantPi_Data').message(myMessage)
+        #pubnub.publish().channel('SmartPlantPi_Alexa').message(myMessage).async(publish_callback)
+        pubnub.publish().channel('SmartPlantPi_Alexa').message(myMessage)
 
         blinkLED(3,0.200)
 

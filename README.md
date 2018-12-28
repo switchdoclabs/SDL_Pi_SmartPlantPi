@@ -7,6 +7,9 @@
 
 # all SmartPlantPi Documentation on www.switchdoc.com/SmartPlantPi
 
+December 27, 2018:  Release Version 022<BR>
+Minor update for PubNub library update, More robust detection of SI1145 Sunlight Sensor 
+
 March 20, 2018:  Release Version 021<BR>
 Minor update for "No Handlers could be found...." error.  Modified listen.py to use config.py<BR>
 
